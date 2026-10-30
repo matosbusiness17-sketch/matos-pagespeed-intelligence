@@ -518,31 +518,78 @@ export function ReportView({
             </div>
           </div>
 
-          {/* Core Web Vitals Lab Metrics Section */}
+          {/* Performance Laboratory Metrics & Core Web Vitals Section */}
           <div>
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
               <div>
                 <h3 className="text-sm font-bold text-slate-900">
-                  Core Web Vitals & Performance Lab Metrics
+                  Performance Metrics & Core Web Vitals (Laboratory Simulation)
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Simulated laboratory measurements under standardized network throttling
+                  Automated Lighthouse laboratory run. LCP and CLS serve as Core Web Vitals lab proxies; FCP, TBT, and Speed Index are supplementary lab diagnostics.
                 </p>
               </div>
-              <span className="text-[11px] font-medium text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200">
-                Laboratory Simulation (Not CrUX field data)
+              <span className="text-[11px] font-medium text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200 self-start sm:self-auto">
+                Lab Simulation • Not CrUX Field Data
               </span>
             </div>
 
             {currentScan.metrics ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+                {/* LCP */}
+                <div className="bg-white p-4 rounded-xl border border-blue-200/80 shadow-sm flex flex-col justify-between relative ring-1 ring-blue-500/10">
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">
+                        Core Web Vital
+                      </span>
+                      {getMetricBadge(currentScan.metrics.lcp.category)}
+                    </div>
+                    <span className="text-xs font-bold text-slate-800">Largest Contentful Paint (LCP)</span>
+                    <p className="text-xl font-extrabold text-slate-900 mt-2">
+                      {currentScan.metrics.lcp.displayValue}
+                    </p>
+                    <p className="text-[11px] text-slate-500 mt-1 line-clamp-2">
+                      {currentScan.metrics.lcp.description}
+                    </p>
+                  </div>
+                  <p className="text-[10px] text-slate-400 mt-3 pt-2 border-t border-slate-100">
+                    Threshold: ≤ 2.5s (Good)
+                  </p>
+                </div>
+
+                {/* CLS */}
+                <div className="bg-white p-4 rounded-xl border border-blue-200/80 shadow-sm flex flex-col justify-between relative ring-1 ring-blue-500/10">
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">
+                        Core Web Vital
+                      </span>
+                      {getMetricBadge(currentScan.metrics.cls.category)}
+                    </div>
+                    <span className="text-xs font-bold text-slate-800">Cumulative Layout Shift (CLS)</span>
+                    <p className="text-xl font-extrabold text-slate-900 mt-2">
+                      {currentScan.metrics.cls.displayValue}
+                    </p>
+                    <p className="text-[11px] text-slate-500 mt-1 line-clamp-2">
+                      {currentScan.metrics.cls.description}
+                    </p>
+                  </div>
+                  <p className="text-[10px] text-slate-400 mt-3 pt-2 border-t border-slate-100">
+                    Threshold: ≤ 0.1 (Good)
+                  </p>
+                </div>
+
                 {/* FCP */}
                 <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-slate-700">First Contentful Paint (FCP)</span>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-[10px] font-medium uppercase tracking-wider text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">
+                        Lab Metric
+                      </span>
                       {getMetricBadge(currentScan.metrics.fcp.category)}
                     </div>
+                    <span className="text-xs font-bold text-slate-700">First Contentful Paint (FCP)</span>
                     <p className="text-xl font-extrabold text-slate-900 mt-2">
                       {currentScan.metrics.fcp.displayValue}
                     </p>
@@ -555,32 +602,16 @@ export function ReportView({
                   </p>
                 </div>
 
-                {/* LCP */}
-                <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-slate-700">Largest Contentful Paint (LCP)</span>
-                      {getMetricBadge(currentScan.metrics.lcp.category)}
-                    </div>
-                    <p className="text-xl font-extrabold text-slate-900 mt-2">
-                      {currentScan.metrics.lcp.displayValue}
-                    </p>
-                    <p className="text-[11px] text-slate-500 mt-1 line-clamp-2">
-                      {currentScan.metrics.lcp.description}
-                    </p>
-                  </div>
-                  <p className="text-[10px] text-slate-400 mt-3 pt-2 border-t border-slate-100">
-                    Threshold: ≤ 2.5s
-                  </p>
-                </div>
-
                 {/* TBT */}
                 <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-slate-700">Total Blocking Time (TBT)</span>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-[10px] font-medium uppercase tracking-wider text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">
+                        Lab Metric
+                      </span>
                       {getMetricBadge(currentScan.metrics.tbt.category)}
                     </div>
+                    <span className="text-xs font-bold text-slate-700">Total Blocking Time (TBT)</span>
                     <p className="text-xl font-extrabold text-slate-900 mt-2">
                       {currentScan.metrics.tbt.displayValue}
                     </p>
@@ -593,32 +624,16 @@ export function ReportView({
                   </p>
                 </div>
 
-                {/* CLS */}
-                <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-slate-700">Cumulative Layout Shift (CLS)</span>
-                      {getMetricBadge(currentScan.metrics.cls.category)}
-                    </div>
-                    <p className="text-xl font-extrabold text-slate-900 mt-2">
-                      {currentScan.metrics.cls.displayValue}
-                    </p>
-                    <p className="text-[11px] text-slate-500 mt-1 line-clamp-2">
-                      {currentScan.metrics.cls.description}
-                    </p>
-                  </div>
-                  <p className="text-[10px] text-slate-400 mt-3 pt-2 border-t border-slate-100">
-                    Threshold: ≤ 0.1
-                  </p>
-                </div>
-
                 {/* Speed Index */}
                 <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-slate-700">Speed Index</span>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-[10px] font-medium uppercase tracking-wider text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">
+                        Lab Metric
+                      </span>
                       {getMetricBadge(currentScan.metrics.speedIndex.category)}
                     </div>
+                    <span className="text-xs font-bold text-slate-700">Speed Index</span>
                     <p className="text-xl font-extrabold text-slate-900 mt-2">
                       {currentScan.metrics.speedIndex.displayValue}
                     </p>
@@ -632,7 +647,7 @@ export function ReportView({
                 </div>
               </div>
             ) : (
-              <p className="text-xs text-slate-500">Core metrics not available for this run.</p>
+              <p className="text-xs text-slate-500">Laboratory metrics not available for this run.</p>
             )}
           </div>
 

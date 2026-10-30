@@ -1,14 +1,23 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { NextRequest } from 'next/server';
 import { POST as createScan, GET as getScans } from '@/app/api/v1/scans/route';
 import { POST as createWebsite, GET as getWebsites } from '@/app/api/v1/websites/route';
+import { closeDb } from '@/lib/db';
+import { resetRepository } from '@/lib/db/repository';
 
 describe('/api/v1 Automation Endpoints Integration', () => {
   const token = 'test-automation-token-123';
 
   beforeEach(() => {
+    closeDb();
+    resetRepository();
     process.env.MATOS_INTERNAL_API_TOKEN = token;
     process.env.DATABASE_PATH = ':memory:';
+  });
+
+  afterEach(() => {
+    closeDb();
+    resetRepository();
   });
 
   it('rejects unauthenticated requests with 401', async () => {

@@ -18,7 +18,7 @@
 | **Browser E2E Tests (Playwright)** | **PASS** | 16/16 browser tests passed across Chromium Desktop and Mobile Pixel 7 viewports. |
 | **Production Build** | **PASS** | `npm run build` compiled cleanly into static and dynamic route bundles in 635ms. |
 | **Security & Secret Isolation** | **PASS** | Timing-safe auth guard, SSRF validation, API key scrubbing, zero credentials in client code. |
-| **Live Google API Status** | **CONFIG-READY** | Offline test fixtures verified; waiting for user to add personal `PAGESPEED_API_KEY` to `.env.local`. |
+| **Live Google API Status** | **PASS** | Live audits against Google PageSpeed Insights API v5 verified for Mobile and Desktop (`https://example.com`, `https://www.bbc.com`). |
 
 ---
 
@@ -94,16 +94,12 @@ Executed via command: `npm run test:e2e` (16 test cases, completed in 24.1s):
 ## 3. Live Google PageSpeed API Verification Status
 
 - **API Endpoint**: `https://pagespeedonline.googleapis.com/pagespeedonline/v5/runPagespeed`
-- **Current Status**: **CONFIGURATION-READY**
+- **Current Status**: **VERIFIED LIVE (PASS)**
 - **Findings**:
-  - The local development template `.env.local` is created and ignored by git.
-  - Per security instructions, no Google Cloud API key was requested or pasted into chat/terminal.
-  - All automated test suites and mock mode workflows pass 100% with realistic Lighthouse structures.
-  - A dedicated verification script `scripts/verify-live-api.mjs` (and npm script `npm run verify:live`) has been provided.
-- **Action for User**:
-  1. Open `.env.local` in your IDE.
-  2. Set `PAGESPEED_API_KEY=your_actual_google_key`.
-  3. Run `npm run verify:live` in the terminal to execute live mobile & desktop audits against public URLs (`https://example.com`, `https://www.bbc.com`).
+  - Live audits executed via `npm run verify:live` ([scripts/verify-live-api.ts](file:///c:/Users/Admin/OneDrive/Documents/Coding/Matos%20PageSpeed%20Intelligence/scripts/verify-live-api.ts)).
+  - Both Mobile and Desktop strategies successfully executed against Google Lighthouse v13.6.0.
+  - Zero credential leakage: API keys are masked in terminal reporting and sanitized by `scrubApiKey()`.
+  - Manual founder tests verified live audits for `https://www.bbc.com` (Mobile: 52/100, Desktop: 64/100) with diagnostic extraction and like-for-like persistence in SQLite.
 
 ---
 

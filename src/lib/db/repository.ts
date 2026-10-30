@@ -204,6 +204,18 @@ export class Repository {
     return res.changes > 0;
   }
 
+  deleteScan(id: string): boolean {
+    const stmt = this.db.prepare('DELETE FROM scans WHERE id = ?');
+    const res = stmt.run(id);
+    return res.changes > 0;
+  }
+
+  deleteScansForWebsite(websiteId: string): number {
+    const stmt = this.db.prepare('DELETE FROM scans WHERE website_id = ?');
+    const res = stmt.run(websiteId);
+    return res.changes;
+  }
+
   // ================= Scans =================
 
   saveScan(scan: ScanResult): ScanResult {
@@ -363,4 +375,8 @@ export function getRepository(): Repository {
     repositoryInstance = new Repository();
   }
   return repositoryInstance;
+}
+
+export function resetRepository(): void {
+  repositoryInstance = null;
 }

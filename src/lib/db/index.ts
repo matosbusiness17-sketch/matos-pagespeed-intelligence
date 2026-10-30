@@ -14,6 +14,10 @@ export function getDatabasePath(): string {
       ? process.env.DATABASE_PATH
       : path.resolve(/*turbopackIgnore: true*/ process.cwd(), process.env.DATABASE_PATH);
   }
+  // Safety guard: Automated tests running in NODE_ENV=test MUST NOT touch production data
+  if (process.env.NODE_ENV === 'test') {
+    return path.resolve(/*turbopackIgnore: true*/ process.cwd(), 'data', 'pagespeed-test.db');
+  }
   return path.resolve(/*turbopackIgnore: true*/ process.cwd(), 'data', 'pagespeed.db');
 }
 

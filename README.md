@@ -22,7 +22,7 @@
 
 - **Real Google PageSpeed Insights v5 Integration**: Evaluates public URLs against Google's performance category with automatic mobile and desktop strategy separation.
 - **Strict SSRF & URL Validation**: Sanitizes and normalizes all URLs while rejecting private IP ranges (RFC 1918), loopback, cloud metadata endpoints (169.254.169.254), internal TLDs, and credentials.
-- **Core Web Vitals & Laboratory Metrics**: Extracts First Contentful Paint (FCP), Largest Contentful Paint (LCP), Total Blocking Time (TBT), Cumulative Layout Shift (CLS), and Speed Index with standard Google thresholds.
+- **Core Web Vitals & Laboratory Metrics**: Distinctly categorizes Core Web Vitals lab proxies (LCP, CLS) and diagnostic laboratory metrics (FCP, TBT, Speed Index). All measurements represent standardized synthetic laboratory simulations, clearly distinguished from Chrome UX Report (CrUX) field data.
 - **Actionable Diagnostic Engine**: Automatically prioritizes performance opportunities (Critical, High, Medium, Low) based on millisecond and byte savings, providing plain-English explanations and concrete remedies.
 - **Like-for-Like Historical Comparison**: Automatically compares subsequent scans against prior runs on the exact same normalized URL and device profile.
 - **Local SQLite Persistence**: High-performance, zero-config relational storage with WAL mode, foreign key cascades, and zero cloud lock-in.
@@ -51,7 +51,7 @@
 ### Installation
 Clone the repository and install dependencies:
 ```bash
-git clone https://github.com/Matos-Systems/matos-pagespeed-intelligence.git
+git clone https://github.com/matosbusiness17-sketch/matos-pagespeed-intelligence.git
 cd matos-pagespeed-intelligence
 npm install
 ```
@@ -106,7 +106,7 @@ DATABASE_PATH=./data/pagespeed.db
 │   ├── qa-report.md           # Verification evidence, test counts, security audit
 │   └── future-roadmap.md      # Scheduled monitoring, CrUX, Matos ecosystem integrations
 ├── scripts/
-│   └── verify-live-api.mjs    # Standalone live Google PageSpeed verification script
+│   └── verify-live-api.ts     # Standalone live Google PageSpeed verification script
 ├── src/
 │   ├── app/                   # App Router pages and API routes
 │   │   ├── api/
